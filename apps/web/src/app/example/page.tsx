@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import FormExample from './_components/form-example';
 import CardExample from './_components/card-example';
 import { Button } from '@/components/shadcn-ui/button';
@@ -9,6 +11,13 @@ const ExamplePage = () => {
       <div className="flex flex-col gap-2">
         <h1 className="heading">Workase</h1>
         <span className="text-primary-gray text-sm">Job Board Web App</span>
+        <Image
+          src="/workase.png"
+          alt="Logo"
+          width={500}
+          height={102.61}
+          className="w-[120px]"
+        />
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius sed
           sequi laborum corporis quidem, modi minus quam minima nemo, nesciunt
@@ -16,6 +25,7 @@ const ExamplePage = () => {
           quibusdam.
         </p>
       </div>
+
       <div className="flex flex-col gap-2">
         <h1 className="heading">Button Example</h1>
         <Button className="w-fit">Get Started</Button>

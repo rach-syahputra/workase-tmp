@@ -1,8 +1,11 @@
 'use client';
 
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
+import { GetSampleByEmail } from '@/lib/apis/sample';
+import { GetSampleResponse } from '@/lib/interfaces/api-response/sample';
 import { Button } from '@/components/shadcn-ui/button';
 import { Card } from '@/components/shadcn-ui/card';
 import Loading from '@/components/ui/loading';
@@ -21,18 +24,31 @@ const validationSchema = Yup.object().shape({
 });
 
 const FormExample = () => {
+  const [email, setEmail] = useState<string>('');
+
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values: FormValues, { resetForm }) => {
-      console.log(values);
+    onSubmit: async (values: FormValues, { resetForm }) => {
+      formik.setStatus('');
 
-      setTimeout(() => {
-        resetForm();
-      }, 1000 * 5);
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+
+      const response: GetSampleResponse = await GetSampleByEmail({
+        email: values.email,
+      });
+
+      console.log(response);
+
+      if (response.success) {
+        setEmail(response.data.email);
+      } else {
+        formik.setStatus('Login failed');
+        setEmail('');
+      }
     },
   });
 
@@ -57,12 +73,19 @@ const FormExample = () => {
             value={formik.values.password}
             errorMessage={formik.errors.password}
           />
+          <p className="text-sm text-red-500">{formik.status}</p>
           <Button type="submit" disabled={formik.isSubmitting}>
             Submit
           </Button>
         </form>
       </Card>
-      {formik.isSubmitting && <Loading size="sm" label="Submitting" />}
+      <div className="flex items-center justify-center gap-6">
+        {formik.isSubmitting ? (
+          <Loading size="sm" label="Submitting" />
+        ) : (
+          <p>{email}</p>
+        )}
+      </div>
     </>
   );
 };
