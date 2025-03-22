@@ -1,5 +1,6 @@
-import SampleController from '../../controllers/sample/sample.controller';
 import { Router } from 'express';
+
+import SampleController from '@/controllers/sample/sample.controller';
 
 class SampleRouter {
   private router: Router;
@@ -12,7 +13,8 @@ class SampleRouter {
   }
 
   private initializeRoutes(): void {
-    this.router.get('/:id', this.sampleController.getSampleById);
+    this.router.get('/', this.sampleController.getSample);
+    this.router.get('/:email', this.sampleController.getSampleByEmail);
   }
 
   getRouter(): Router {

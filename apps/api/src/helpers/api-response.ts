@@ -1,13 +1,12 @@
-import { response } from 'express';
-
-import { IApiResponse } from '@/interfaces/api/api-response';
+import { IApiResponse } from '@/interfaces/response/api-response';
 
 export const ApiResponse = ({
-  statusCode = 200,
+  res,
+  statusCode,
   message,
   data,
 }: IApiResponse) => {
-  response.status(statusCode).json({
+  res.status(statusCode).json({
     success: true,
     message,
     data,

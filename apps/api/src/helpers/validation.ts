@@ -1,8 +1,5 @@
 import * as Yup from 'yup';
 
-export const validate = async <T>(
-  schema: Yup.Schema<T>,
-  data: unknown,
-): Promise<T> => {
-  return schema.validate(data, { abortEarly: false }) as Promise<T>;
+export const validate = <T>(schema: Yup.Schema<T>, data: unknown) => {
+  return schema.validateSync(data, { abortEarly: false });
 };

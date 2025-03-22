@@ -12,7 +12,7 @@
       "@/*": ["src/*"]
     }
   },
-  // "include": ["src/**/*"],
-  "include": ["**/*.ts"],
+  "include": ["src/**/*"],
+  // "include": ["**/*.ts"],
   "exclude": ["node_modules"]
 }

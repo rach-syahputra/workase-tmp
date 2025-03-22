@@ -1,31 +1,49 @@
-import { ApiResponse } from '@/helpers/api-response';
 import { NextFunction, Request, Response } from 'express';
 
+import { ApiResponse } from '@/helpers/api-response';
+import SampleService from '@/services/sample/sample.service';
+
 class SampleController {
-  async getSampleById(req: Request, res: Response, next: NextFunction) {
+  private sampleService: SampleService;
+
+  constructor() {
+    this.sampleService = new SampleService();
+  }
+
+  getSample = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { id } = req.params;
+      const data = await this.sampleService.getSample();
 
-      // const data = SampleService.getSample()
-      const data = {
-        id,
-        name: 'workase',
-      };
-
-      res.status(200).json({
-        success: true,
+      ApiResponse({
+        res,
+        statusCode: 200,
         message: 'Sample data retrieved successfully',
         data,
       });
-      // ApiResponse({
-      //   statusCode: 200,
-      //   message: 'Sample data retrieved successfully',
-      //   data,
-      // });
     } catch (err) {
       next(err);
     }
-  }
+  };
+
+  getSampleByEmail = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const { email } = req.params;
+      const data = await this.sampleService.getSampleByEmail({ email });
+
+      ApiResponse({
+        res,
+        statusCode: 200,
+        message: 'Sample data by id retrieved successfully',
+        data,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
 }
 
 export default SampleController;

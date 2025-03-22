@@ -69,7 +69,10 @@ export default class App {
         } else if (err instanceof Yup.ValidationError) {
           res.status(400).json({
             success: false,
-            errors: err.errors,
+            error: {
+              message: err.errors[0],
+              details: err.errors,
+            },
           });
         } else if (err instanceof jwt.TokenExpiredError) {
           res.status(400).json({
@@ -79,7 +82,7 @@ export default class App {
             },
           });
         } else {
-          console.log(err.message);
+          console.log(err);
 
           res.status(500).json({
             success: false,
