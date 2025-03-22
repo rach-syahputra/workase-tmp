@@ -213,12 +213,13 @@ model QuestionOption {
 }
 
 model UserAssesment {
-  id          String   @id @default(uuid())
-  userId      String   @map("user_id")
-  assesmentId String   @map("assesment_id")
+  id          String              @id @default(uuid())
+  userId      String              @map("user_id")
+  assesmentId String              @map("assesment_id")
+  status      UserAssesmentStatus
   score       Int
-  createdAt   DateTime @map("created_at")
-  isDeleted   Boolean  @default(false) @map("is_deleted")
+  createdAt   DateTime            @map("created_at")
+  isDeleted   Boolean             @default(false) @map("is_deleted")
 
   user      User      @relation(fields: [userId], references: [id], onUpdate: Cascade)
   assesment Assesment @relation(fields: [assesmentId], references: [id], onUpdate: Cascade)
@@ -349,6 +350,11 @@ enum PaymentStatus {
   PENDING
   REJECTED
   CONFIRMED
+}
+
+enum UserAssesmentStatus {
+  PASSED
+  FAILED
 }
 
 enum PreselectionAttemptStatus {
