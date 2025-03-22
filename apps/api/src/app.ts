@@ -8,8 +8,12 @@ import express, {
   Router,
 } from 'express';
 import cors from 'cors';
-import { PORT } from './config';
-import { SampleRouter } from './routers/sample.router';
+import jwt from 'jsonwebtoken';
+import * as Yup from 'yup';
+
+import { corsOptions, PORT } from './config';
+import { ResponseError } from './helpers/error';
+import SampleRouter from './routers/sample/sample.router';
 
 export default class App {
   private app: Express;
@@ -22,7 +26,17 @@ export default class App {
   }
 
   private configure(): void {
-    this.app.use(cors());
+    this.app.use(cors(corsOptions));
+    this.app.options('*', (req, res) => {
+      res.header('Access-Control-Allow-Origin', 'https://workase.vercel.app');
+      res.header(
+        'Access-Control-Allow-Methods',
+        'GET, POST, PUT, DELETE, OPTIONS',
+      );
+      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      res.header('Access-Control-Allow-Credentials', 'true');
+      res.sendStatus(204);
+    });
     this.app.use(json());
     this.app.use(urlencoded({ extended: true }));
   }
@@ -40,11 +54,40 @@ export default class App {
     // error
     this.app.use(
       (err: Error, req: Request, res: Response, next: NextFunction) => {
-        if (req.path.includes('/api/')) {
-          console.error('Error : ', err.stack);
-          res.status(500).send('Error !');
-        } else {
+        if (!err) {
           next();
+          return;
+        }
+
+        if (err instanceof ResponseError) {
+          res.status(err.code || 500).json({
+            success: false,
+            error: {
+              message: err.message,
+            },
+          });
+        } else if (err instanceof Yup.ValidationError) {
+          res.status(400).json({
+            success: false,
+            errors: err.errors,
+          });
+        } else if (err instanceof jwt.TokenExpiredError) {
+          res.status(400).json({
+            success: false,
+            error: {
+              message: 'jwt is expired',
+            },
+          });
+        } else {
+          console.log(err.message);
+
+          res.status(500).json({
+            success: false,
+            error: {
+              message: 'Something went wrong, please try again later',
+              originalMessage: err.message,
+            },
+          });
         }
       },
     );
