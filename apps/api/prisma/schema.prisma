@@ -41,6 +41,7 @@ model Developer {
   email     String  @unique
   name      String
   password  String
+  image     String?
   isDeleted Boolean @default(false) @map("is_deleted")
 
   SubscriptionPayment SubscriptionPayment[]
