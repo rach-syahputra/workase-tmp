@@ -158,9 +158,24 @@ model CompanyReview {
   createdAt      DateTime @map("created_at")
   isDeleted      Boolean  @default(false) @map("is_deleted")
 
-  company Company @relation(fields: [companyId], references: [id], onUpdate: Cascade)
+  company              Company               @relation(fields: [companyId], references: [id], onUpdate: Cascade)
+  CompanyReviewRatings CompanyReviewRatings?
 
   @@map("company_reviews")
+}
+
+model CompanyReviewRatings {
+  id              String @id @default(uuid())
+  companyReviewId String @unique @map("company_review_id")
+  overallRating   Int    @map("overall_rating")
+  workCulture     Int    @map("work_culture")
+  workLifeBalance Int    @map("work_life_balance")
+  facilities      Int
+  careerGrowth    Int    @map("career_growth")
+
+  companyReview CompanyReview @relation(fields: [companyReviewId], references: [id], onUpdate: Cascade)
+
+  @@map("company_review_ratings")
 }
 
 model Skill {
