@@ -24,7 +24,10 @@ model User {
   gender        Gender
   lastEducation String       @map("last_education")
   address       String
+  jobId         String?      @map("job_id")
   isDeleted     Boolean      @default(false) @map("is_deleted")
+
+  job Job? @relation(fields: [jobId], references: [id], onUpdate: Cascade)
 
   AppliedJob          AppliedJob[]
   SavedJob            SavedJob[]
@@ -81,6 +84,7 @@ model Job {
   AppliedJob       AppliedJob[]
   SavedJob         SavedJob[]
   PreselectionTest PreselectionTest[]
+  User             User[]
 
   @@map("jobs")
 }
