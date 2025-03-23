@@ -10,10 +10,16 @@ export const GetSampleByEmail = async ({ email }: GetSampleRequest) => {
 
     return response.data;
   } catch (error) {
+    console.error('error fetching: ', error);
+
     if (error instanceof AxiosError) {
       return error.response?.data as GetSampleResponse;
     }
 
-    console.error(error);
+    return {
+      error: {
+        message: 'Login failed',
+      },
+    };
   }
 };

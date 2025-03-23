@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 
 import { GetSampleByEmail } from '@/lib/apis/sample';
 import { GetSampleResponse } from '@/lib/interfaces/api-response/sample';
+import { useSampleContext } from '@/context/sample-context';
 import { Button } from '@/components/shadcn-ui/button';
 import { Card } from '@/components/shadcn-ui/card';
 import Loading from '@/components/ui/loading';
@@ -24,7 +25,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const FormExample = () => {
-  const [email, setEmail] = useState<string>('');
+  const { email, setEmail } = useSampleContext();
 
   const formik = useFormik({
     initialValues: {
