@@ -1,5 +1,5 @@
 import {
-  AddSampleRequest,
+  AddSampleRequestService,
   GetSampleByEmailRequest,
 } from '@/interfaces/sample/sample.interface';
 import { ResponseError } from '@/helpers/error';
@@ -10,12 +10,16 @@ import {
   getSampleByEmailSchema,
 } from '@/validations/sample/sample.validation';
 import { generateHashedPassword } from '@/helpers/utils';
+import ImageRepository from '@/repositories/cloudinary/image.repository';
+import { CLOUDINARY_DEVELOPER_IMAGE_FOLDER } from '@/config';
 
 class SampleService {
   private sampleRepository: SampleRepository;
+  private imageRepository: ImageRepository;
 
   constructor() {
     this.sampleRepository = new SampleRepository();
+    this.imageRepository = new ImageRepository();
   }
 
   getSample = async () => {
@@ -35,21 +39,40 @@ class SampleService {
     };
   };
 
-  addSample = async ({ email, name, password }: AddSampleRequest) => {
+  addSample = async ({
+    email,
+    name,
+    password,
+    image,
+  }: AddSampleRequestService) => {
     validate(addSampleSchema, { email, name, password });
 
     await this.checkSampleExistence(email);
     password = await generateHashedPassword(password);
+
+    // cloudinary flow
+    let developerImage;
+
+    if (image) {
+      developerImage = await this.imageRepository.upload(
+        image.path,
+        CLOUDINARY_DEVELOPER_IMAGE_FOLDER,
+      );
+    }
+    //
+
     const sample = await this.sampleRepository.addSample({
       email,
       name,
       password,
+      image: developerImage?.secure_url,
     });
 
     return {
       id: sample.id,
       email: sample.email,
       name: sample.email,
+      image: sample.image || null,
     };
   };
 

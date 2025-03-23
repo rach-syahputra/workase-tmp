@@ -2,8 +2,16 @@ export interface GetSampleByEmailRequest {
   email: string;
 }
 
-export interface AddSampleRequest {
+interface AddSampleRequest {
   name: string;
   email: string;
   password: string;
+}
+
+export interface AddSampleRequestService extends AddSampleRequest {
+  image?: Express.Multer.File;
+}
+
+export interface AddSampleRequestRepository extends AddSampleRequest {
+  image?: string;
 }

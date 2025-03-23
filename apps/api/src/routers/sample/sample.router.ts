@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import SampleController from '@/controllers/sample/sample.controller';
+import { uploadDeveloperImage } from '@/helpers/multer';
 
 class SampleRouter {
   private router: Router;
@@ -15,7 +16,11 @@ class SampleRouter {
   private initializeRoutes(): void {
     this.router.get('/', this.sampleController.getSample);
     this.router.get('/:email', this.sampleController.getSampleByEmail);
-    this.router.post('/', this.sampleController.addSample);
+    this.router.post(
+      '/',
+      uploadDeveloperImage.single('image'),
+      this.sampleController.addSample,
+    );
   }
 
   getRouter(): Router {

@@ -52,6 +52,7 @@ class SampleController {
         email,
         name,
         password,
+        image: req.file,
       });
 
       ApiResponse({

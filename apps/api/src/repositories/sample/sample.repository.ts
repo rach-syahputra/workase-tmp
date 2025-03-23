@@ -1,8 +1,9 @@
-import {
-  GetSampleByEmailRequest,
-  AddSampleRequest,
-} from '@/interfaces/sample/sample.interface';
 import { PrismaClient } from '@prisma/client';
+
+import {
+  AddSampleRequestRepository,
+  GetSampleByEmailRequest,
+} from '@/interfaces/sample/sample.interface';
 
 class SampleRepository {
   private prisma: PrismaClient;
@@ -23,12 +24,18 @@ class SampleRepository {
     });
   };
 
-  addSample = async ({ name, email, password }: AddSampleRequest) => {
+  addSample = async ({
+    name,
+    email,
+    password,
+    image,
+  }: AddSampleRequestRepository) => {
     return this.prisma.developer.create({
       data: {
         email,
         name,
         password,
+        image,
       },
     });
   };
