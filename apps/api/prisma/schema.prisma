@@ -153,7 +153,6 @@ model CompanyReview {
   title          String
   jobTitle       String   @map("job_title")
   salaryEstimate Int      @map("salary_estimate")
-  rating         Int
   content        String
   createdAt      DateTime @map("created_at")
   isDeleted      Boolean  @default(false) @map("is_deleted")
