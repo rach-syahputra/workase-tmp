@@ -15,6 +15,7 @@ class SampleRouter {
   private initializeRoutes(): void {
     this.router.get('/', this.sampleController.getSample);
     this.router.get('/:email', this.sampleController.getSampleByEmail);
+    this.router.post('/', this.sampleController.addSample);
   }
 
   getRouter(): Router {

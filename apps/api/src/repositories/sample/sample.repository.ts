@@ -1,4 +1,7 @@
-import { GetSampleByEmailRequest } from '@/interfaces/sample/sample.interface';
+import {
+  GetSampleByEmailRequest,
+  AddSampleRequest,
+} from '@/interfaces/sample/sample.interface';
 import { PrismaClient } from '@prisma/client';
 
 class SampleRepository {
@@ -16,6 +19,16 @@ class SampleRepository {
     return this.prisma.developer.findUnique({
       where: {
         email,
+      },
+    });
+  };
+
+  addSample = async ({ name, email, password }: AddSampleRequest) => {
+    return this.prisma.developer.create({
+      data: {
+        email,
+        name,
+        password,
       },
     });
   };

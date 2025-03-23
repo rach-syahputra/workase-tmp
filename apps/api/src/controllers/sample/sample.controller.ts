@@ -44,6 +44,26 @@ class SampleController {
       next(err);
     }
   };
+
+  addSample = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { email, name, password } = req.body;
+      const data = await this.sampleService.addSample({
+        email,
+        name,
+        password,
+      });
+
+      ApiResponse({
+        res,
+        statusCode: 201,
+        message: 'Sample data added successfully',
+        data,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
 }
 
 export default SampleController;
