@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
 
+import { Toaster } from '@/components/shadcn-ui/toaster';
+
 export const metadata: Metadata = {
   title: 'Workase — Exclusive Job Listing',
   description:
@@ -47,6 +49,7 @@ export default function RootLayout({
         className={`${geist.variable} ${cocogooes.variable} text-primary-dark font-[family-name:var(--font-geist)] antialiased`}
       >
         {children}
+        <Toaster />
       </body>
     </html>
   );
