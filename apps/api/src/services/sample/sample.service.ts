@@ -28,7 +28,11 @@ class SampleService {
     const sample = await this.sampleRepository.getSampleByEmail({ email });
     if (!sample) throw new ResponseError(404, 'Sample not found');
 
-    return sample;
+    return {
+      id: sample.id,
+      email: sample.email,
+      name: sample.email,
+    };
   };
 
   addSample = async ({ email, name, password }: AddSampleRequest) => {
