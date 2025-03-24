@@ -117,7 +117,13 @@ a {
 }
 
 @layer components {
-  .heading {
-    @apply text-[30px] font-bold;
+  .heading-1 {
+    @apply text-4xl font-bold;
+  }
+  .heading-2 {
+    @apply text-2xl font-bold;
+  }
+  .heading-3 {
+    @apply text-xl font-bold;
   }
 }

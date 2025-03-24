@@ -9,7 +9,9 @@ const ExamplePage = () => {
   return (
     <Container className="flex max-w-screen-lg flex-col gap-8 py-8">
       <div className="flex flex-col gap-2">
-        <h1 className="heading">Workase</h1>
+        <h1 className="heading-1">Workase</h1>
+        <span className="heading-2 text-primary-blue">Workase</span>
+        <span className="heading-3 text-primary-dark-blue">Workase</span>
         <span className="text-primary-gray text-sm">Job Board Web App</span>
         <Image
           src="/workase.png"

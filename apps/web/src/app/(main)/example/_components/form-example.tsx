@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -57,7 +56,7 @@ const FormExample = () => {
     <>
       <Card className="p-5">
         <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4">
-          <h2 className="text-xl font-bold">Login</h2>
+          <h2 className="heading-3">Login</h2>
           <FormInput
             label="Email"
             type="text"
