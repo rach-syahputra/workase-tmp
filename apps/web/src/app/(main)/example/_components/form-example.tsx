@@ -10,6 +10,7 @@ import { Button } from '@/components/shadcn-ui/button';
 import { Card } from '@/components/shadcn-ui/card';
 import Loading from '@/components/ui/loading';
 import FormInput from '@/components/ui/form-input';
+import DisabledFormInput from '@/components/ui/disabled-form-input.tsx';
 
 interface FormValues {
   email: string;

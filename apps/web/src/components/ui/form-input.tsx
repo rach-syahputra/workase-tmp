@@ -1,9 +1,11 @@
+import { HTMLInputTypeAttribute } from 'react';
+
 import { Input } from '../shadcn-ui/input';
 import { Label } from '../shadcn-ui/label';
 
 interface FormInputProps {
   label: string;
-  type: string;
+  type: HTMLInputTypeAttribute;
   name: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
