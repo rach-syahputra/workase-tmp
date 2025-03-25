@@ -1,5 +1,6 @@
 import { HTMLInputTypeAttribute } from 'react';
 
+import { cn } from '@/lib/utils';
 import { Input } from '../shadcn-ui/input';
 import { Label } from '../shadcn-ui/label';
 
@@ -11,6 +12,7 @@ interface FormInputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
   errorMessage?: string;
+  className?: string;
 }
 
 const FormInput: React.FC<FormInputProps> = ({
@@ -21,9 +23,10 @@ const FormInput: React.FC<FormInputProps> = ({
   onChange,
   disabled,
   errorMessage,
+  className,
 }) => {
   return (
-    <div className="flex flex-col gap-2">
+    <div className={cn('flex flex-col gap-2', className)}>
       <Label htmlFor={name}>{label}</Label>
       <Input
         type={type}
