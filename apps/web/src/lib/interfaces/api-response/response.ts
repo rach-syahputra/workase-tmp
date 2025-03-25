@@ -1,6 +1,6 @@
 export interface APIResponse {
   success: boolean;
-  message: string;
+  message?: string;
   error?: {
     message: string;
   };
