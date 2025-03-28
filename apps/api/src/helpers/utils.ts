@@ -11,3 +11,10 @@ export const generateHashedPassword = async (password: string) => {
 
   return hashedPassword;
 };
+
+export const convertDateToUTC7 = (isoString: string): string => {
+  const date = new Date(isoString);
+  const utc7Date = new Date(date.getTime() + 7 * 60 * 60 * 1000);
+
+  return utc7Date.toISOString();
+};
