@@ -9,3 +9,11 @@ export const cn = (...inputs: ClassValue[]) => {
 export const formatRelativeTime = (dateString: string) => {
   return formatDistanceToNow(new Date(dateString), { addSuffix: true });
 };
+
+export const formatCurrency = (amount: number): string => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+  }).format(amount);
+};
